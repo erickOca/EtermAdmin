@@ -1,6 +1,18 @@
-<div id="map">
+
     <div class="flex">
- 
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d481726.88753320446!2d-99.42381909146057!3d19.391166839205034!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce0026db097507%3A0x54061076265ee841!2sCiudad%20de%20M%C3%A9xico%2C%20CDMX!5e0!3m2!1ses-419!2smx!4v1678936304051!5m2!1ses-419!2smx" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
+ <div class="fechas" [formGroup]="range">
+
+                            <label for="start">Buscar por fecha:</label>
+
+                            <input type="date" id="start" name="trip-start" formControlName="start">
+                            <label>a</label>
+                            <input type="date" id="end" name="trip-end" formControlName="end">
+                            <button (click)="filtrarPorFecha()" mat-raised-button
+                                style="background-color: #42a5f5;">Buscar</button>
+                            <button (click)="quitarFiltro()" mat-raised-button
+                                style="margin: 10px; background-color: darkgray;">Limpiar</button>
+                        </div>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d481934.3792194156!2d-99.43281991307357!3d19.320931023657103!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce0036b1352927%3A0xdefd9e4ee8d18a5b!2sCd.%20de%20M%C3%A9xico!5e0!3m2!1ses-419!2smx!4v1678942966289!5m2!1ses-419!2smx" width="1000" height="800" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        > &markers=color:red%7Clabel:MARCADOR1%7C19.382554993820797, -99.14344842657628
+        &markers=color:green%7Clabel:B%7C19.405851417123827, -99.1408489124075</iframe>
     </div>

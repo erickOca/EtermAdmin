@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormGroup, FormControl} from '@angular/forms';
 
 declare const google: any;
 
@@ -15,10 +16,29 @@ draggable?: boolean;
 })
 export class MapsComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
-
+    range = new FormGroup({
+        start: new FormControl<Date | null>(null),
+        end: new FormControl<Date | null>(null),
+      });
+      constructor() { }
+    ngOnInit(): void {
+        throw new Error('Method not implemented.');
+    }
+    
+    filtrarPorFecha(){
+    if(this.range.controls.start.valid && this.range.controls.end.valid && this.range.value.start != null && this.range.value.end != null){
+      console.log("RANGO DE FECHAS: ", this.range.value)
+      alert("buscando por fechas"  )
+    }else{
+      alert("Debes escoger un rango de fechas valido")
+      console.log("Debe escoger un rango de fechas validas ")
+    }
+    }
+    
+    quitarFiltro(){
+    this.range.controls.start.reset()
+    this.range.controls.end.reset()
+    }
 //     var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
 //     var mapOptions = {
 //         zoom: 13,
@@ -122,4 +142,4 @@ export class MapsComponent implements OnInit {
 //     marker.setMap(map);
   }
 
-}
+
