@@ -8,5 +8,5 @@ export class Encuesta {
     imagen2 : String;
     imagen3 : String;
     direccion : String;
-    fecha : String;
+    fecha : Date;
 }

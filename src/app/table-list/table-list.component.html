@@ -1,34 +1,5 @@
 <div class="main-content">
-
     <div class="container-fluid">
-
-
-        <!-- <div class="filter">
-        <mat-form-field appearance="fill">
-            <mat-label>fechas</mat-label>
-            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-              <input style="color: blue;" matStartDate formControlName="start" placeholder="Fecha inicial">
-              <input style="color: blue;" matEndDate formControlName="end" placeholder="Fecha final">
-            </mat-date-range-input>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
-          
-            <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
-          </mat-form-field>
-          
-          <button mat-button color="primary"
-          class="resetButton ml-3 h-100"
-          (click)="filtrarPorFecha()">
-            Buscar
-          </button>
-          <button mat-button color="accent"
-          class="resetButton ml-3 h-100"
-          (click)="quitarFiltro()">
-            Limpiar
-          </button>
-        </div> -->
-
         <div class="row">
 
             <div class="col-md-12">
@@ -38,24 +9,17 @@
                         <p class="card-category"> Lista de encuestas</p>
                     </div>
                     <div class="card-body">
-
-
-                        <div class="fechas" [formGroup]="range">
-
-                            <label for="start">Buscar por fecha:</label>
-
-                            <input type="date" id="start" name="trip-start" formControlName="start">
+                        <div class="fechas" >
+                            <label for="fechaInicio">Buscar por fecha:</label>
+                            <input type="date" id="fechaInicio" [(ngModel)]= "fechaInicio"  >
                             <label>a</label>
-                            <input type="date" id="end" name="trip-end" formControlName="end">
+                            <input type="date" id="fechaFin"  [(ngModel)]= "fechaFin" >
                             <button (click)="filtrarPorFecha()" mat-raised-button
                                 style="background-color: #42a5f5;">Buscar</button>
-                            <button (click)="quitarFiltro()" mat-raised-button
+                            <button  mat-raised-button
                                 style="margin: 10px; background-color: darkgray;">Limpiar</button>
                         </div>
-
-
-
-                        <div class="table-responsive">
+                        <div class="table-responsive" >
                             <table class="table">
                                 <thead class=" text-primary">
                                     <th scope="col">ID</th>
@@ -70,24 +34,25 @@
                                     <th scope="col">Fecha</th>
                                 </thead>
                                 <tbody>
-                                    <!-- <tr *ngFor="let encuesta of encuesta">
-                                        <div class="filtro" *ngIf="encuesta.fecha >= filtrarPorFecha">
-                                            <th scope="row">{{ encuesta.IdEncuesta }}</th>
-                                            <td>{{ encuesta.p1 }}</td>
-                                            <td>{{ encuesta.p2 }}</td>
-                                            <td>{{ encuesta.p3 }}</td>
-                                            <td>{{ encuesta.p4 }}</td>
+                                    <tr *ngFor="let encuestas of encuestaFiltrada">
+                                    
+                                            <th scope="row">{{ encuestas.idEncuesta }}</th>
+                                            <td>{{ encuestas.p1 }}</td>
+                                            <td>{{ encuestas.p2 }}</td>
+                                            <td>{{ encuestas.p3 }}</td>
+                                            <td>{{ encuestas.p4 }}</td>
                                             <td><img src="assets\img\tecnico.png" style="height: 50px; width: 50px;">
                                             </td>
                                             <td> <img src="assets/img/terminal.png" style="height: 50px; width: 50px;">
                                             </td>
                                             <td> <img src="assets/img/personal.png" style="height: 50px; width: 50px;">
                                             </td>
-                                            <td>{{ encuesta.Direccion}}</td>
-                                            <td>{{ encuesta.Fecha}}</td>
-                                        </div>
-                                    </tr> -->
-                                    <tr>
+                                            <td>{{ encuestas.direccion}}</td>
+                                            <td>{{ encuestas.fecha}}</td>
+                                  
+
+
+                                    <!-- <tr>
                                         <th scope="row">1</th>
                                         <td>SI</td>
                                         <td>SI</td>
@@ -170,14 +135,14 @@
                                         <td> <img src="assets/img/personal.png" style="height: 50px; width: 50px;"></td>
                                         <td>AV. BAJA VELOCIDAD 54, CASA BLANCA , METEPEC , MEX ,</td>
                                         <td>08/03/2023</td>
-                                    </tr>
+                                    </tr> -->
                         </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <button   mat-raised-button
+        <button  (click)="exportToExcel()"  mat-raised-button
                                 style="background-color:darkgreen; color:#fff; margin-left: 100px;">Generar excel</button>
     </div>
 </div>

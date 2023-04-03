@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup, FormControl} from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Encuesta } from 'app/models/encuesta';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-table-list',
@@ -8,37 +9,49 @@ import { Encuesta } from 'app/models/encuesta';
   styleUrls: ['./table-list.component.css']
 })
 export class TableListComponent implements OnInit {
-  encuesta: Encuesta[] = [
-     { idEncuesta: 1,p1: 'Si',p2: 'Si',p3: 'Si',p4: 'Si',imagen1:'', imagen2:'',imagen3:'',direccion:'', fecha: '2022-12-31'}
+
+  encuesta: any[] = [
+    { idEncuesta: 1, p1: 'Si', p2: 'Si', p3: 'Si', p4: 'Si', direccion: 'Ciudad de mexico', fecha: new Date('2023-03-10') },
+    { idEncuesta: 2, p1: 'Si', p2: 'Si', p3: 'Si', p4: 'Si', direccion: 'Ciudad de mexico', fecha: new Date('2023-03-01') },
+    { idEncuesta: 3, p1: 'Si', p2: 'Si', p3: 'Si', p4: 'Si', direccion: 'Ciudad de mexico', fecha: new Date('2023-03-05') },
+    { idEncuesta: 4, p1: 'Si', p2: 'Si', p3: 'Si', p4: 'Si', direccion: 'Ciudad de mexico', fecha: new Date('2023-03-06') },
+    { idEncuesta: 5, p1: 'Si', p2: 'Si', p3: 'Si', p4: 'Si', direccion: 'Ciudad de mexico', fecha: new Date('2023-03-07') },
+    { idEncuesta: 6, p1: 'Si', p2: 'Si', p3: 'Si', p4: 'Si', direccion: 'Ciudad de mexico', fecha: new Date('2023-03-08') },
+    { idEncuesta: 7, p1: 'Si', p2: 'Si', p3: 'Si', p4: 'Si', direccion: 'Ciudad de mexico', fecha: new Date('2023-03-09') },
+    { idEncuesta: 8, p1: 'Si', p2: 'Si', p3: 'Si', p4: 'Si', direccion: 'Ciudad de mexico', fecha: '2023-03-25' }
   ];
 
-  range = new FormGroup({
-    start: new FormControl<Date | null>(null),
-    end: new FormControl<Date | null>(null),
-  });
+  encuestaFiltrada: any[] = this.encuesta;
+
+
+  fechaInicio: Date;
+  fechaFin: Date;
+
   constructor() { }
 
-filtrarPorFecha(){
-if(this.range.controls.start.valid && this.range.controls.end.valid && this.range.value.start != null && this.range.value.end != null){
-  console.log("RANGO DE FECHAS: ", this.range.value)
-  alert("buscando por fechas"  )
-}else{
-  alert("Debes escoger un rango de fechas valido")
-  console.log("Debe escoger un rango de fechas validas ")
-}
-}
-
-quitarFiltro(){
-this.range.controls.start.reset()
-this.range.controls.end.reset()
-}
+  filtrarPorFecha() {
+    this.encuestaFiltrada = this.encuesta.filter(registro => {
+      const fecha = new Date(registro.fecha);
+      return fecha >= this.fechaInicio && fecha <= this.fechaFin;
+    });
+    console.log(this.encuesta)
+    console.log(this.encuestaFiltrada)
+  }
 
 
   ngOnInit() {
-  
   }
-
+  exportToExcel(): void {
+    // Crea un libro de Excel vacío
+    const workbook = XLSX.utils.book_new();
   
-
-
+    // Crea una hoja de Excel con los datos de la tabla
+    const worksheet = XLSX.utils.json_to_sheet(this.encuesta);
+  
+    // Agrega la hoja al libro de Excel
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos');
+  
+    // Guarda el archivo Excel
+    XLSX.writeFile(workbook, 'datos.xlsx');
+  }
 }

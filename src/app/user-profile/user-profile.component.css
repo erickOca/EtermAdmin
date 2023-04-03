@@ -1,0 +1,13 @@
+.blue-snackbar {
+    background-color:#42a5f5 ;
+  }
+  .red-snackbar {
+    background-color:red ;
+  }
+.col-md-4 {
+    width: 50%; 
+    margin: auto;
+}
+.nuevoUser{
+   text-align: center;
+}
