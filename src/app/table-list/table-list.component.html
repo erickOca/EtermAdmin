@@ -1,148 +1,98 @@
 <div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title ">Encuestas</h4>
-                        <p class="card-category"> Lista de encuestas</p>
-                    </div>
-                    <div class="card-body">
-                        <div class="fechas" >
-                            <label for="fechaInicio">Buscar por fecha:</label>
-                            <input type="date" id="fechaInicio" [(ngModel)]= "fechaInicio"  >
-                            <label>a</label>
-                            <input type="date" id="fechaFin"  [(ngModel)]= "fechaFin" >
-                            <button (click)="filtrarPorFecha()" mat-raised-button
-                                style="background-color: #42a5f5;">Buscar</button>
-                            <button  mat-raised-button
-                                style="margin: 10px; background-color: darkgray;">Limpiar</button>
-                        </div>
-                        <div class="table-responsive" >
-                            <table class="table">
-                                <thead class=" text-primary">
-                                    <th scope="col">ID</th>
-                                    <th scope="col">¿Su terminal se encuentra operando correctamente?</th>
-                                    <th scope="col">¿Se le dio capacitacion sobre el uso y manejo de su terminal?</th>
-                                    <th scope="col">¿El tecnico se encontro uniformado?</th>
-                                    <th scope="col">¿El tecnico fue amable al realizar el servicio?</th>
-                                    <th scope="col">Foto del tecnico</th>
-                                    <th scope="col">Foto de la terminal o insumo</th>
-                                    <th scope="col">Foto del personal o comercio</th>
-                                    <th scope="col">Direccion</th>
-                                    <th scope="col">Fecha</th>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let encuestas of encuestaFiltrada">
-                                    
-                                            <th scope="row">{{ encuestas.idEncuesta }}</th>
-                                            <td>{{ encuestas.p1 }}</td>
-                                            <td>{{ encuestas.p2 }}</td>
-                                            <td>{{ encuestas.p3 }}</td>
-                                            <td>{{ encuestas.p4 }}</td>
-                                            <td><img src="assets\img\tecnico.png" style="height: 50px; width: 50px;">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Encuestas</h4>
+            <p class="card-category">Lista de Encuestas</p>
+          </div>
+          <div class="card-body">
+            <div class="fechas">
+              <label for="fechaInicio">Buscar por Fecha:</label>
+              <input
+                type="date"
+                id="fechaInicio"
+                [(ngModel)]="fechaInicio"
+                name="fechaInicio"
+              />
+              <label>a</label>
+              <input
+                type="date"
+                id="fechaFin"
+                [(ngModel)]="fechaFin"
+                name="fechaFin"
+              />
+              <button
+                (click)="showByRangeFecha(fechaInicio, fechaFin)"
+                mat-raised-button
+                style="background-color: #42a5f5"
+              >
+                Buscar
+              </button>
+              <button
+                (click)="clearSearchFields()"
+                mat-raised-button
+                style="margin: 10px; background-color: darkgray"
+              >
+                Limpiar
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <th scope="col">N. de Encuesta</th>
+                  <th scope="col">
+                    ¿Su Terminal se Encuentra Operando Correctamente?
+                  </th>
+                  <th scope="col">
+                    ¿Se le dio Capacitacion Sobre el Uso y Manejo de su
+                    Terminal?
+                  </th>
+                  <th scope="col">¿El Tecnico se Encontro Uniformado?</th>
+                  <th scope="col">
+                    ¿El Tecnico fue Amable al Realizar el Servicio?
+                  </th>
+                  <th scope="col">Foto del Tecnico</th>
+                  <th scope="col">Foto de la Terminal o Insumo</th>
+                  <th scope="col">Foto del Personal o Comercio</th>
+                  <th scope="col">Direccion</th>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Usuario</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let encuestas of listEncuesta">
+                    <th scope="row">{{ encuestas.encuestaId }}</th>
+                    <td>{{ encuestas.terminalStatus | uppercase }}</td>
+                    <td>{{ encuestas.terminalCapacitacion | uppercase }}</td>
+                    <td>{{ encuestas.tecnicoUniformado | uppercase }}</td>
+                    <td>{{ encuestas.tecnicoEstatus | uppercase }}</td>
+                    <!-- <td><img src="assets\img\tecnico.png" style="height: 50px; width: 50px;">
                                             </td>
                                             <td> <img src="assets/img/terminal.png" style="height: 50px; width: 50px;">
                                             </td>
                                             <td> <img src="assets/img/personal.png" style="height: 50px; width: 50px;">
-                                            </td>
-                                            <td>{{ encuestas.direccion}}</td>
-                                            <td>{{ encuestas.fecha}}</td>
-                                  
-
-
-                                    <!-- <tr>
-                                        <th scope="row">1</th>
-                                        <td>SI</td>
-                                        <td>SI</td>
-                                        <td>NO</td>
-                                        <td>SI</td>
-                                        <td><img  src="assets\img\tecnico.png" style="height: 50px; width: 50px;"></td>
-                                        <td> <img src="assets/img/terminal.png" style="height: 50px; width: 50px;"></td>
-                                        <td> <img src="assets/img/personal.png" style="height: 50px; width: 50px;"></td>
-                                        <td>AV. BAJA VELOCIDAD 54, CASA BLANCA , METEPEC , MEX ,</td>
-                                        <td>08/03/2023</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>SI</td>
-                                        <td>SI</td>
-                                        <td>NO</td>
-                                        <td>SI</td>
-                                        <td><img src="assets/img/tecnico.png" style="height: 50px; width: 50px;"></td>
-                                        <td> <img src="assets/img/terminal.png" style="height: 50px; width: 50px;"></td>
-                                        <td> <img src="assets/img/personal.png" style="height: 50px; width: 50px;"></td>
-                                        <td>AV. BAJA VELOCIDAD 54, CASA BLANCA , METEPEC , MEX ,</td>
-                                        <td>08/03/2023</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>SI</td>
-                                        <td>SI</td>
-                                        <td>NO</td>
-                                        <td>SI</td>
-                                        <td><img src="assets/img/tecnico.png" style="height: 50px; width: 50px;"></td>
-                                        <td> <img src="assets/img/terminal.png" style="height: 50px; width: 50px;"></td>
-                                        <td> <img src="assets/img/personal.png" style="height: 50px; width: 50px;"></td>
-                                        <td>AV. BAJA VELOCIDAD 54, CASA BLANCA , METEPEC , MEX ,</td>
-                                        <td>08/03/2023</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">4</th>
-                                        <td>SI</td>
-                                        <td>SI</td>
-                                        <td>NO</td>
-                                        <td>SI</td>
-                                        <td><img src="assets/img/tecnico.png" style="height: 50px; width: 50px;"></td>
-                                        <td> <img src="assets/img/terminal.png" style="height: 50px; width: 50px;"></td>
-                                        <td> <img src="assets/img/personal.png" style="height: 50px; width: 50px;"></td>
-                                        <td>AV. BAJA VELOCIDAD 54, CASA BLANCA , METEPEC , MEX ,</td>
-                                        <td>08/03/2023</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">5</th>
-                                        <td>SI</td>
-                                        <td>SI</td>
-                                        <td>NO</td>
-                                        <td>SI</td>
-                                        <td><img src="assets/img/tecnico.png" style="height: 50px; width: 50px;"></td>
-                                        <td> <img src="assets/img/terminal.png" style="height: 50px; width: 50px;"></td>
-                                        <td> <img src="assets/img/personal.png" style="height: 50px; width: 50px;"></td>
-                                        <td>AV. BAJA VELOCIDAD 54, CASA BLANCA , METEPEC , MEX ,</td>
-                                        <td>08/03/2023</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">6</th>
-                                        <td>SI</td>
-                                        <td>SI</td>
-                                        <td>NO</td>
-                                        <td>SI</td>
-                                        <td><img src="assets/img/tecnico.png" style="height: 50px; width: 50px;"></td>
-                                        <td> <img src="assets/img/terminal.png" style="height: 50px; width: 50px;"></td>
-                                        <td> <img src="assets/img/personal.png" style="height: 50px; width: 50px;"></td>
-                                        <td>AV. BAJA VELOCIDAD 54, CASA BLANCA , METEPEC , MEX ,</td>
-                                        <td>08/03/2023</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">7</th>
-                                        <td>SI</td>
-                                        <td>SI</td>
-                                        <td>NO</td>
-                                        <td>SI</td>
-                                        <td><img src="assets/img/tecnico.png" style="height: 50px; width: 50px;"></td>
-                                        <td> <img src="assets/img/terminal.png" style="height: 50px; width: 50px;"></td>
-                                        <td> <img src="assets/img/personal.png" style="height: 50px; width: 50px;"></td>
-                                        <td>AV. BAJA VELOCIDAD 54, CASA BLANCA , METEPEC , MEX ,</td>
-                                        <td>08/03/2023</td>
-                                    </tr> -->
-                        </tbody>
-                        </table>
-                    </div>
-                </div>
+                                            </td> -->
+                    <td>{{ encuestas.tecnicoFoto }}</td>
+                    <td>{{ encuestas.terminalFoto }}</td>
+                    <td>{{ encuestas.personaComercioFoto }}</td>
+                    <td>{{ encuestas.geolocalizacion }}</td>
+                    <td>{{ encuestas.fechaEncuesta | date : "dd/MM/yyyy" }}</td>
+                    <td>{{ encuestas.usuariosUsuarioId.usuarioNombre | uppercase }} </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </div>
         </div>
-        <button  (click)="exportToExcel()"  mat-raised-button
-                                style="background-color:darkgreen; color:#fff; margin-left: 100px;">Generar excel</button>
+      </div>
+      <button
+        (click)="exportToExcel()"
+        mat-raised-button
+        style="background-color: darkgreen; color: #fff; margin-left: 100px"
+      >
+        Generar excel
+      </button>
     </div>
+  </div>
 </div>

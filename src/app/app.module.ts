@@ -8,7 +8,7 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { LoginComponent } from './login/login.component';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
+    MatSnackBarModule
   
   ],
   declarations: [

@@ -1,57 +1,70 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Encuesta } from 'app/models/encuesta';
-import * as XLSX from 'xlsx';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormControl } from "@angular/forms";
+import { Encuesta } from "app/models/encuesta";
+import { EncuestaService } from "app/services/encuesta.service";
+import { data } from "jquery";
+import * as XLSX from "xlsx";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
-  selector: 'app-table-list',
-  templateUrl: './table-list.component.html',
-  styleUrls: ['./table-list.component.css']
+  selector: "app-table-list",
+  templateUrl: "./table-list.component.html",
+  styleUrls: ["./table-list.component.css"],
 })
 export class TableListComponent implements OnInit {
-
-  encuesta: any[] = [
-    { idEncuesta: 1, p1: 'Si', p2: 'Si', p3: 'Si', p4: 'Si', direccion: 'Ciudad de mexico', fecha: new Date('2023-03-10') },
-    { idEncuesta: 2, p1: 'Si', p2: 'Si', p3: 'Si', p4: 'Si', direccion: 'Ciudad de mexico', fecha: new Date('2023-03-01') },
-    { idEncuesta: 3, p1: 'Si', p2: 'Si', p3: 'Si', p4: 'Si', direccion: 'Ciudad de mexico', fecha: new Date('2023-03-05') },
-    { idEncuesta: 4, p1: 'Si', p2: 'Si', p3: 'Si', p4: 'Si', direccion: 'Ciudad de mexico', fecha: new Date('2023-03-06') },
-    { idEncuesta: 5, p1: 'Si', p2: 'Si', p3: 'Si', p4: 'Si', direccion: 'Ciudad de mexico', fecha: new Date('2023-03-07') },
-    { idEncuesta: 6, p1: 'Si', p2: 'Si', p3: 'Si', p4: 'Si', direccion: 'Ciudad de mexico', fecha: new Date('2023-03-08') },
-    { idEncuesta: 7, p1: 'Si', p2: 'Si', p3: 'Si', p4: 'Si', direccion: 'Ciudad de mexico', fecha: new Date('2023-03-09') },
-    { idEncuesta: 8, p1: 'Si', p2: 'Si', p3: 'Si', p4: 'Si', direccion: 'Ciudad de mexico', fecha: '2023-03-25' }
-  ];
-
-  encuestaFiltrada: any[] = this.encuesta;
-
-
-  fechaInicio: Date;
-  fechaFin: Date;
-
-  constructor() { }
-
-  filtrarPorFecha() {
-    this.encuestaFiltrada = this.encuesta.filter(registro => {
-      const fecha = new Date(registro.fecha);
-      return fecha >= this.fechaInicio && fecha <= this.fechaFin;
-    });
-    console.log(this.encuesta)
-    console.log(this.encuestaFiltrada)
-  }
-
+  listEncuesta: Encuesta[] = [];
+  encuestasFiltr: Encuesta[];
+  fechaInicio: string;
+  fechaFin: string;
+  constructor(
+    private encuestaService: EncuestaService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
+    this.encuestaService.showAllEncuesta().subscribe((data) => {
+      this.listEncuesta = data;
+    });
   }
+
+  showListEncuesta() {
+    this.encuestaService.showAllEncuesta().subscribe((data) => {
+      this.listEncuesta = data;
+    });
+  }
+
+  showByRangeFecha(fechaInicio: String, fechaFin: String) {
+    this.encuestaService
+      .showByRangeFecha(fechaInicio, fechaFin)
+      .subscribe((data) => {
+        this.listEncuesta = data;
+        this.snackBar.open("Buscando..", "Cerrar", { panelClass: ['blue-snackbar'], duration: 3000 });
+        return;
+      });
+    console.log(data);
+  }
+
+  clearSearchFields() {
+    this.fechaInicio = "";
+    this.fechaFin = "";
+    this.encuestaService.showAllEncuesta().subscribe((data) => {
+      this.listEncuesta = data;
+      this.snackBar.open("Limpiando..", "Cerrar", { duration: 300000, panelClass: ['blue-snackbar'] });
+    });
+  }
+
   exportToExcel(): void {
     // Crea un libro de Excel vacío
     const workbook = XLSX.utils.book_new();
-  
+
     // Crea una hoja de Excel con los datos de la tabla
-    const worksheet = XLSX.utils.json_to_sheet(this.encuesta);
-  
+    const worksheet = XLSX.utils.json_to_sheet(this.listEncuesta);
+
     // Agrega la hoja al libro de Excel
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos');
-  
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Datos");
+
     // Guarda el archivo Excel
-    XLSX.writeFile(workbook, 'datos.xlsx');
+    XLSX.writeFile(workbook, "encuestas.xlsx");
+    this.snackBar.open("Excel generado..", "Cerrar", { duration: 3000 });
   }
 }
